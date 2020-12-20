@@ -8,4 +8,9 @@ def home_page(request):
         }
     return render(request, 'homepage.html', context)
 
-    
+def about_page(request):
+    context = {
+                    "title": "About Page",
+                    "content": "Bem vindo a About Page"
+              }
+    return render(request, "about/view.html", context)   
