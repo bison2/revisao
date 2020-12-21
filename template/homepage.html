@@ -4,16 +4,18 @@
 <title>pagina home</title>
 
 {% block base_head %}
-
+<!-- sobreescrevendo o css do bootstrap, para usar o css do static local-->
 <link rel="stylesheet" href='{% static "css/main.css" %}'>
 
 {% endblock base_head %}
 
+<!-- usando o context da funcao home_page da views.py-->
 {% block content %}
-    <div class="text-center bg-primary">
+    <div class="text-center" >
         <h1>{{title}}</h1>
         <h2>{{content}}</h2>
-        <img src="{% static 'img/loja_virtual.jpg'%}" class="img-fluid">
+<!-- usando no src da img a imagem do static local-->
+        <img src="{% static 'img/loja_virtual.jpg' %}" class="img-fluid">
     </div>
 
 {% endblock %}

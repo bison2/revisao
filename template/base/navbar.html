@@ -1,5 +1,8 @@
+<!-- os names das urls de urls.py são chamadas de 'as home_url, etc'. 
+    Elas sao usadas nas tags href e na li-->
 
 {% url 'home' as home_url %}
+{% url 'about' as about_url %}
 {% url 'contact' as contact_url %}
 {% url 'products:list' as products_list_url %}
 {% url 'login' as login_url %}
@@ -14,6 +17,9 @@
       <ul class="navbar-nav mr-auto">
       <li class="nav-item {% if request.path == home_url %} active {% endif %}">
         <a class="nav-link" href="{{ home_url }}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {% if request.path == about_url %} active {% endif %}">
+        <a class="nav-link" href="{{ about_url }}">About <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item {% if request.path == contact_url %} active {% endif %}">
         <a class="nav-link" href="{{ contact_url }}">Contato</a>
