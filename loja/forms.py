@@ -29,3 +29,27 @@ class ContactForm(forms.Form):
                 }
             )
         )
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if not "gmail.com" in email:
+            raise forms.ValidationError("O Email deve ser do gmail.com")
+        return email
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                    "class": "form-control", 
+                    "placeholder": "digite seu nome de usuario"
+                }
+            )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                 "class": "form-control ", 
+                 "placeholder": "Digite sua senha"
+                }
+            )
+        )
