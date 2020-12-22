@@ -2,13 +2,16 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from .forms import ContactForm, LoginForm
+from .forms import ContactForm, LoginForm, RegisterForm
 
 def home_page(request):
     context = {
         'title':'HOME PAGE',
         'content':'Bem vindo a nossa Home Page:)'
         }
+    if request.user.is_authenticated:
+        context["premium_content"] = "Você é um usuário Premium"
+        
     return render(request, 'homepage.html', context)
 
 def about_page(request):
@@ -56,3 +59,20 @@ def login_page(request):
             #Retorna uma mensagem de erro de 'invalid login'.
             print("Login inválido")
     return render(request, "auth/login.html", context)
+
+def register_page(request):
+    form = RegisterForm(request.POST or None)
+    context = {
+        'title':'Pagina de Registro',
+        'content':'bem vindo a pagina de registro',
+        'form': form 
+    }
+
+    return render(request, 'auth/register.html', context)
+
+def logout_page(request):
+    context = {
+                "content": "Você efetuou o logout com sucesso! :)"
+              }
+    logout(request)
+    return render(request, "auth/logout.html", context)

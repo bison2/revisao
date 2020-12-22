@@ -53,3 +53,62 @@ class LoginForm(forms.Form):
                 }
             )
         )
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(
+        widget = forms.TextInput(
+            attrs = {
+                'class':'form-control',
+                'placeholder':'Digite seu nome completo'
+            }
+        )    
+    )
+
+    email = forms.EmailField(
+        widget = forms.EmailInput(
+            attrs = {
+                'class':'form-control',
+                'placeholder':'digite um email válido'
+            }
+        )
+    )
+
+    password = forms.CharField(
+        widget = forms.PasswordInput(
+            attrs = {
+                'class':'form-control',
+                'placeholder':'digite sua senha'
+            }
+        )
+    )
+
+    password2 = forms.CharField(
+        widget = forms.PasswordInput(
+            attrs = {
+                'class':'form-control',
+                'placeholder':'confirme sua senha'
+            }
+        )
+    )
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        qs = User.objects.filter(username=username)
+        if qs.exists():
+            raise forms.ValidationError('esse usuario ja existe. Tente outro')
+        return username 
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        qs = User.objects.filter(email=email)
+        if qs.exists():
+            raise forms.ValidationError('esse email ja existe, tente outro')
+        return email
+
+    def clean(self):
+        data = self.cleaned_data
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+        if password != password2 :
+            raise forms.ValidationError('as senhas devem ser iguais')
+        return data
